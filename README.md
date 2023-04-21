@@ -46,9 +46,10 @@ curl -i -X POST \
 5. By default, The container is listening on port 80. You should now be able to make a request: 
 
 ```bash
-curl -i -X GET \
-  --url http://localhost:80/ \
-  --header 'Host: test.com'
+curl --location 'http://localhost:80/' \
+--header 'Host: test.com' \
+--header 'api_key: 8504c7eb-156c-4ea2-9512-a5ffe31dd47b' \
+--header 'user_id: axis_bank'
 ```
 
 6. The data should be captured in the corresponding Zenskar Account [Raw Metrics](https://app.zenskar.com/meters/raw-metrics/).
