@@ -12,7 +12,6 @@ docker-compose -f docker-compose.yml up -d
 
 2. Configure the Zenskar plugin
 ```bash
-curl -i -X POST --url http://localhost:8001/plugins/ --data "name=zenskar" --data "config.application_id=YOUR_APPLICATION_ID";
 curl --location 'http://localhost:8001/plugins' \
 --data-urlencode 'name=zenskar' \
 --data-urlencode 'config.api_endpoint=https://api.zenskar.com/usage/<raw_metric_slug>' \
