@@ -134,7 +134,6 @@ function _M.serialize(ngx, conf)
   else
     session_token_entity = nil
   end
-	ngx.log(ngx.INFO,"[zenskar] User header"..conf.user_id_header.." Request header "..request_headers[conf.user_id_header])
 
 	if zenskar_ctx.user_id_entity == nil then 
     if conf.user_id_header ~= nil and request_headers[conf.user_id_header] ~= nil then
@@ -164,7 +163,7 @@ function _M.serialize(ngx, conf)
         end
     end
   end
-	ngx.log(ngx.INFO,"[zenskar] Serialized "..zenskar_ctx.user_id_entity)
+
 	return {
     request = {
       uri =  helpers.prepare_request_uri(ngx, conf),

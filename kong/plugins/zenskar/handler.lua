@@ -81,7 +81,7 @@ function ZenskarLogHandler:body_filter(conf)
     -- Hash key of the config application Id
     local hash_key = conf.organisation_id
 
-    if content_length == nil then
+    if content_length ~= nil then
         local chunk = ngx.arg[1]
         local zenskar_data = ngx.ctx.zenskar or {res_body = ""}
         zenskar_data.res_body = zenskar_data.res_body .. chunk
