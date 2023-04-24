@@ -48,6 +48,27 @@ function mask_headers(headers, mask_fields)
   return mask_headers
 end
 
+function process_data(body, mask_fields)
+  local body_entity = nil
+  local body_transfer_encoding = nil
+  local is_deserialised, deserialised_body = pcall(cjson_safe.decode, body)
+  if not is_deserialised  then
+    body_entity, body_transfer_encoding = base64_encode_body(body)
+  else
+    if next(mask_fields) == nil then
+        body_entity, body_transfer_encoding = deserialised_body, 'json' 
+    else
+        local ok, mask_result = pcall(mask_body, deserialised_body, mask_fields)
+        if not ok then
+          body_entity, body_transfer_encoding = deserialised_body, 'json' 
+        else
+          body_entity, body_transfer_encoding = mask_result, 'json' 
+        end
+    end
+  end
+  return body_entity, body_transfer_encoding
+end
+
 function parse_body(headers, body, mask_fields, conf)
   local body_entity = nil
   local body_transfer_encoding = nil
