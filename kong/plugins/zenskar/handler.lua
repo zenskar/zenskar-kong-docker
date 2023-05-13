@@ -54,15 +54,13 @@ function ZenskarLogHandler:access(conf)
 
     req_read_body()
     local read_request_body = req_get_body_data()
-    
-    if content_length == nil and read_request_body ~= nil then
+    if content_length ~= nil and read_request_body ~= nil then
         req_body = read_request_body
         local content_type = headers["content-type"]
         if content_type and string_find(content_type:lower(), "application/x-www-form-urlencoded", nil, true) then
-            req_post_args, err, mimetype = kong.request.get_body()
-        end
+          req_post_args, err, mimetype = kong.request.get_body()
+      end
     end
-
     ngx.ctx.zenskar = {
         req_body = req_body,
         res_body = res_body,
@@ -77,7 +75,6 @@ function ZenskarLogHandler:body_filter(conf)
     ngx.log(ngx.INFO, "[zenskar] body filter Phase called for the new event" .. " for pid" .. ngx.worker.pid())
     local headers = ngx.resp.get_headers()
     local content_length = headers["content-length"]
-
     -- Hash key of the config application Id
     local hash_key = conf.organisation_id
 
